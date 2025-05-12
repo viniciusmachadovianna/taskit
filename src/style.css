@@ -1,0 +1,157 @@
+:root{
+    --granite: url('assets/texture.png');
+    --green-v:      #41B783;
+    --gray-v:       #34495E;
+    --black:        #333333;
+    --white:        #EEEEEE;
+    --red:          #ff4e4e;
+    --background:   #222222;
+    --m-x: 0;
+    --m-y:0;
+}
+body {
+    background-color: var(--background);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100dvh;
+    color: var(--white);
+    
+}
+#app{
+    margin-top: 50px;
+    display: flex;
+    flex-flow: column;
+}
+#title{
+    font-size: 2em;
+    color: var(--white);
+    text-align: center;
+    &>span{color: var(--green-v);}
+}
+.list{
+    background-color: var(--black);
+    border: 1px solid var(--green-v);
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 20px;
+}
+.input{
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    margin: 10px 20px;
+    &>.btnAdd{
+        all: unset;
+        cursor: pointer;
+        width: 20px;
+        margin: auto 5px;
+        &>svg{
+            stroke: var(--green-v);
+            width:24px;
+            height:24px;
+        }
+    }
+    &>input{
+        margin-left: 20px;
+        min-width: 120px;
+        height: 25px;
+        text-align: center;
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid var(--white);
+        color: var(--white);
+        font-size: 1.1em;
+        &:focus{
+            outline: none;
+            border-bottom: 1px solid var(--green-v);
+        }
+    }
+}
+ul{
+    max-height: 60dvh;
+    margin-bottom: 20px;
+    overflow: auto;
+    padding-left: 20px;
+    &>li{
+        margin: 5px 0;
+        padding: 0;
+        list-style: none;
+        background-color: transparent;
+        color: var(--white);
+        position: relative;
+        display: flex;
+        flex-flow: row;
+        align-items: flex-start;
+        /* &::before{
+            content: '⠿';
+            position: absolute;
+            right: 100%;
+            height: 100%;
+            color: gray;
+            cursor: grab;
+        } */
+        &>textarea{
+            all: unset;
+            background-color: transparent;
+            color: var(--white);
+            outline: none;
+            border: none;
+            margin-left: 5px;
+            text-decoration-color: var(--white);
+        }
+        &>.btnCheck{
+            all: unset;
+            cursor: pointer;
+            stroke: var(--white);
+            position: relative;
+            display: flex;
+            align-items: center;
+            &:hover{stroke: var(--green-v);}
+        }
+        &>.btnDelete{
+            all: unset;
+            cursor: pointer;
+            position: absolute;
+            right: 16px;
+            fill: var(--white);
+            &:hover{fill: var(--red);}
+        }
+    }
+}
+.shimmer{
+    position: relative;
+    &::before{
+        position: absolute;
+        pointer-events: none;
+        content: '';
+        width: 100%;height: 100%;
+        left: 0;top: 0;
+        background: var(--granite) rgba(51,51,51,.1);
+        background-size: 100px,100%;
+        background-blend-mode: screen;
+        mask-image: radial-gradient(200px circle at var(--m-x) var(--m-y), var(--green-v), transparent 100%);
+        opacity: 0;
+        transition: opacity .5s ease;
+    }
+    &:hover::before{opacity: .3;}
+}
+
+footer{
+    user-select: none;
+    position: absolute;
+    bottom: 16px;
+    width: 90%;
+    display: flex;
+    flex-flow: row;
+    align-items: baseline;
+    justify-content: space-between;
+    left: 50%;transform: translateX(-50%);
+    font-family: monospace;
+    &>a>svg{height: 40px;fill: var(--white);cursor: pointer;
+    &:hover{fill: var(--green-v)}}
+}
