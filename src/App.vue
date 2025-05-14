@@ -110,7 +110,7 @@ export default{
           const textareas = this.$el.querySelectorAll('textarea');
           textareas.forEach(textarea => {
             textarea.style.height = 'auto';
-            textarea.style.height = `${textarea.scrollHeight}px`;
+            textarea.style.height = `${textarea.scrollHeight+5}px`;
           });
         });
       },

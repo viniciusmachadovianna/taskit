@@ -11,24 +11,22 @@
     --m-y:0;
 }
 body {
-    background-color: var(--background);
-    font-family: Arial, sans-serif;
+    width: 100%;
+    height: 100dvh;
     margin: 0;
+    background-color: var(--background);
+}
+#app{
+    font-family: Poppins, sans-serif;
     display: flex;
     flex-flow: column;
     justify-content: flex-start;
     align-items: center;
-    width: 100%;
-    height: 100dvh;
     color: var(--white);
-    
-}
-#app{
-    margin-top: 20px;
-    display: flex;
-    flex-flow: column;
+    height: 100dvh;
 }
 #title{
+    margin-top: 20px;
     font-size: 2em;
     color: var(--white);
     text-align: center;
@@ -99,10 +97,10 @@ body {
   color: var(--black);
 }
 ul{
-    max-height: 60dvh;
     margin-bottom: 10px;
     overflow: auto;
     padding-left: 20px;
+    max-height:50dvh;
     &>li{
         margin: 5px 0;
         padding: 0;
@@ -131,6 +129,7 @@ ul{
             outline: none;
             border: none;
             width: 100%;
+            min-height: 70px;
             max-height: 100px;
             margin: 0 50px 0 10px;
             overflow-wrap: break-word;
@@ -182,14 +181,13 @@ sub{
 
 footer{
     user-select: none;
-    position: absolute;
-    bottom: 16px;
-    width: 90%;
+    margin-top: auto;
+    margin-bottom: 20px;
+    width: 90dvw;
     display: flex;
     flex-flow: row;
     align-items: baseline;
     justify-content: space-between;
-    left: 50%;transform: translateX(-50%);
     font-family: monospace;
     &>a>svg{height: 40px;fill: var(--white);cursor: pointer;
     &:hover{fill: var(--green-v)}}
