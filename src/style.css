@@ -217,11 +217,3 @@ footer{
     &>a>svg{height: 40px;fill: var(--white);cursor: pointer;
     &:hover{fill: var(--green-v)}}
 }
-
-.drop-line {
-  height: 2px;
-  background-color: var(--green-v);
-  margin: 4px 0;
-  border-radius: 1px;
-  transition: all 0.2s ease;
-}

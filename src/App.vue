@@ -62,10 +62,10 @@ export default{
         newTask: '',
         currentFilter: 'all',
         tasks: [
-          {text:'Arraste o ícone ⠿ no canto esquerdo <<< para reordenar tarefas',completed:false},
-          {text:'<<< Marque a caixa à esquerda para concluir',completed:false},
+          {text:'Arraste o ícone ⠿ no canto esquerdo ← para reordenar tarefas',completed:false},
+          {text:'← Marque a caixa à esquerda para concluir',completed:false},
           {text:'Escrvu errdo? Clique no texto para editar',completed:false},
-          {text:'Delete a tarefa clicando no X à direita >>>',completed:false},
+          {text:'Delete a tarefa clicando no X à direita →',completed:false},
           {text:'Isso já foi resolvido!',completed:true},
         ]
     };
