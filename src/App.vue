@@ -9,9 +9,9 @@
           </button>
       </div>
       <nav class="filters">
-        <button @click="currentFilter='all'" :class="{ active: currentFilter==='all'}">Todas <sup>{{ tasks.length }}</sup></button>
-        <button @click="currentFilter = 'done'" :class="{ active: currentFilter === 'done' }">Concluídas <sup>{{ tasks.filter(t => t.completed).length }}</sup></button>
         <button @click="currentFilter = 'pending'" :class="{ active: currentFilter === 'pending' }">Pendentes <sup>{{ tasks.filter(t => !t.completed).length }}</sup></button>
+        <button @click="currentFilter = 'done'" :class="{ active: currentFilter === 'done' }">Concluídas <sup>{{ tasks.filter(t => t.completed).length }}</sup></button>
+        <button @click="currentFilter='all'" :class="{ active: currentFilter==='all'}">Todas <sup>{{ tasks.length }}</sup></button>
       </nav>
       <ul>
         <li v-for="(task, index) in filteredTasks"    :key="index" 
@@ -44,7 +44,7 @@
           <path d="M304 384v-24c0-29 31.54-56.43 52-76 28.84-27.57 44-64.61 44-108 0-80-63.73-144-144-144a143.6 143.6 0 00-144 144c0 41.84 15.81 81.39 44 108 20.35 19.21 52 46.7 52 76v24M224 480h64M208 432h96M256 384V256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
           <path d="M294 240s-21.51 16-38 16-38-16-38-16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
         </svg> 
-        Edite itens clicando na descrição deles.</sub>
+        Dica: Edite itens clicando na descrição deles.</sub>
     </section>
     <footer>
         <a href="https://www.linkedin.com/in/viniciusmachadovianna/" target="_blank" rel="noopener noreferrer">
@@ -62,15 +62,11 @@ export default{
         newTask: '',
         currentFilter: 'all',
         tasks: [
-            { text: 'bug: remover espaço em branco abaixo de alguns itens com descrição grande', completed: true },
-            { text: 'style: ajustar tamanho dos itens assim que a página carrega', completed: true },
-            { text: 'ux: aumentar espaço para conseguir mover uma tarefa', completed: true },
-            { text: '+ filtros "Tudo","Pendentes" e "Completas"', completed: true },
-            { text: 'Estilizar lista', completed: true },
-            { text: 'Editar texto dos itens', completed: true },
-            { text: 'Desenvolver função para reordenar/arrastar tarefas', completed: true },
-            { text: 'Adicionar botão de arrastar', completed: true },
-            { text: 'itens grandes expandem automaticamente na lista', completed: true },
+          {text:'Arraste o ícone ⠿ no canto esquerdo <<< para reordenar tarefas',completed:false},
+          {text:'<<< Marque a caixa à esquerda para concluir',completed:false},
+          {text:'Escrvu errdo? Clique no texto para editar',completed:false},
+          {text:'Delete a tarefa clicando no X à direita >>>',completed:false},
+          {text:'Isso já foi resolvido!',completed:true},
         ]
     };
     },
@@ -84,14 +80,10 @@ export default{
               });
               this.newTask = '';
           }
+          autoResizeAllTextareas();
       },
       completeTask(index) {this.tasks[index].completed = !this.tasks[index].completed},
       removeTask(index) {this.tasks.splice(index, 1)},
-      autoResize(e){
-        const textarea = e.target;
-        textarea.style.height = 'auto';
-        textarea.style.height = `${textarea.scrollHeight}px`;
-      },
       moveShimmer(e){
         const sec=e.currentTarget.getBoundingClientRect(),
           x=`${e.clientX-sec.left}px`,
@@ -109,12 +101,17 @@ export default{
         this.tasks.splice(targetIndex, 0, draggedTask);
         this.draggedIndex = null;
       },
+      autoResize(e){
+        const textarea = e.target;
+        textarea.style.height = 'auto';
+        textarea.style.height = `${textarea.scrollHeight}px`;
+      },
       autoResizeAllTextareas() {
         this.$nextTick(() => {
           const textareas = this.$el.querySelectorAll('textarea');
           textareas.forEach(textarea => {
             textarea.style.height = 'auto';
-            textarea.style.height = `${textarea.scrollHeight+5}px`;
+            textarea.style.height = `${textarea.scrollHeight}px`;
           });
         });
       },

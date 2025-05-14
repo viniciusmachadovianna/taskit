@@ -6,6 +6,7 @@
     --lightgray:    #BABABA;
     --white:        #EEEEEE;
     --red:          #ff4e4e;
+    --yellow:       #ffe260;
     --background:   #222222;
     --m-x: 0;
     --m-y:0;
@@ -47,7 +48,7 @@ body {
     width: fit-content;
     display: flex;
     align-items: center;
-    margin: 10px 20px;
+    margin: 20px;
     &>.btnAdd{
         all: unset;
         cursor: pointer;
@@ -76,10 +77,9 @@ body {
     }
 }
 .filters {
-  margin-top: 20px;
   display: flex;
   gap: 10px;
-  margin: 0 10px;
+  margin: 10px 20px;
   justify-content: center;
 }
 
@@ -100,14 +100,19 @@ body {
   background-color: var(--green-v);
   color: var(--black);
 }
-.filters button.active > sup {display:inline-block;}
+.filters button.active > sup {
+    display:inline-block;
+    background-color: var(--white);
+    color: black;
+}
+
 .filters sup{
-    display: none;
+    /* display: none; */
     padding: 2px 5px;
     border-radius: 50%;
-    color: black;
     margin-left: 5px;
-    background-color: var(--white);
+    color: var(--white);
+    background-color: transparent;
 }
 ul{
     margin-bottom: 10px;
@@ -142,6 +147,7 @@ ul{
             outline: none;
             border: none;
             width: 100%;
+            min-height: auto;
             max-height: 100px;
             margin: 0 50px 0 10px;
             overflow-wrap: break-word;
@@ -172,9 +178,10 @@ sub{
     margin-bottom: 5px;
     display:flex;
     align-items:center;
+
     &>svg{margin-right: 5px}
     &:hover{color: var(--white);}
-    &:hover>svg>path{stroke: yellow;}
+    &:hover>svg>path{stroke: var(--yellow);}
 }
 sub,sub>svg>path{
     transition: .5s ease;
@@ -209,4 +216,12 @@ footer{
     font-family: monospace;
     &>a>svg{height: 40px;fill: var(--white);cursor: pointer;
     &:hover{fill: var(--green-v)}}
+}
+
+.drop-line {
+  height: 2px;
+  background-color: var(--green-v);
+  margin: 4px 0;
+  border-radius: 1px;
+  transition: all 0.2s ease;
 }
