@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <span id="title"><span>Task</span>.it</span>
-    <section class="list shimmer">
+    <section class="list shimmer" @mousemove="moveShimmer">
       <div class="input">
           <input v-model="newTask" @keyup.enter="addTask" placeholder="Descreva a tarefa" />
           <button class="btnAdd" @click="addTask">
@@ -21,7 +21,10 @@
               <path :style="{display:task.completed?'flex':'none'}"  fill="none" stroke="#41B783" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M416 128L192 384l-96-96"/>
             </svg>
           </button>
-          <textarea v-model="task.text" :style="{ textDecoration: task.completed ? 'line-through' : 'none' , color: task.completed ? '#41B783' : '#EEE' , textDecorationColor: task.completed ? '#EEE':'none'}"></textarea>
+          <textarea 
+            v-model="task.text" 
+            :style="{ textDecoration: task.completed ? 'line-through' : 'none' , color: task.completed ? '#41B783' : '#EEE' , textDecorationColor: task.completed ? '#EEE':'none'}"
+            @input="autoResize" ></textarea>
           <button class="btnDelete" @click="removeTask(index)">
             <svg width="24px" height="24px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M400 145.49L366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49z"/></svg>
           </button>
@@ -65,7 +68,19 @@ export default{
         }
     },
       completeTask(index) {this.tasks[index].completed = !this.tasks[index].completed},
-      removeTask(index) {this.tasks.splice(index, 1)}
+      removeTask(index) {this.tasks.splice(index, 1)},
+      autoResize(e){
+        const textarea = e.target;
+        textarea.style.height = 'auto';
+        textarea.style.height = `${textarea.scrollHeight}px`;
+      },
+      moveShimmer(e){
+        const sec=e.currentTarget.getBoundingClientRect(),
+          x=`${e.clientX-sec.left}px`,
+          y=`${e.clientY-sec.top}px`
+        document.documentElement.style.setProperty('--m-x',x)
+        document.documentElement.style.setProperty('--m-y',y)
+      }
     },
     computed: {
       filteredTasks() {
@@ -79,15 +94,5 @@ export default{
         }
       }
     },
-    mounted(){
-      const li = document.querySelector('section')
-        li.addEventListener('mousemove',(e)=>{
-            const square=li.getBoundingClientRect(),
-                x=`${e.clientX-square.left}px`,
-                y=`${e.clientY-square.top}px`
-            document.documentElement.style.setProperty('--m-x',x)
-            document.documentElement.style.setProperty('--m-y',y)
-      });
-    }
 };
 </script>

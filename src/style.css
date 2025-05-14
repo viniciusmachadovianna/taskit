@@ -123,7 +123,10 @@ ul{
             color: var(--white);
             outline: none;
             border: none;
-            margin-left: 5px;
+            width: 100%;
+            max-height: 100px;
+            margin: 0 50px 0 10px;
+            overflow-wrap: break-word;
             text-decoration-color: var(--white);
         }
         &>.btnCheck{
