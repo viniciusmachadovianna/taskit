@@ -3,6 +3,7 @@
     --green-v:      #41B783;
     --gray-v:       #34495E;
     --black:        #333333;
+    --lightgray:    #BABABA;
     --white:        #EEEEEE;
     --red:          #ff4e4e;
     --background:   #222222;
@@ -39,6 +40,9 @@ body {
     border-radius: 5px;
     padding: 5px;
     margin-top: 20px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
 }
 .input{
     width: fit-content;
@@ -95,7 +99,7 @@ body {
 }
 ul{
     max-height: 60dvh;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     overflow: auto;
     padding-left: 20px;
     &>li{
@@ -108,14 +112,16 @@ ul{
         display: flex;
         flex-flow: row;
         align-items: flex-start;
-        &::before{
-            content: '⠿';
-            position: absolute;
-            right: 100%;
-            height: 100%;
+        &>.btnDrag{
+            all: unset;
+            cursor: grab;
             color: gray;
-            cursor: not-allowed;
-            /* cursor: grab; */
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-right:5px;
+            transition: .5s ease;
+            &:hover{color: var(--white);}
         }
         &>textarea{
             all: unset;
@@ -147,6 +153,13 @@ ul{
             &:hover{fill: var(--red);}
         }
     }
+}
+sub{
+    color: var(--lightgray);
+    margin-bottom: 5px;
+    display:flex;
+    align-items:center;
+    &>svg{margin-right: 5px;}
 }
 .shimmer{
     position: relative;

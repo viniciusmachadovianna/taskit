@@ -15,6 +15,12 @@
       </nav>
       <ul>
         <li v-for="(task, index) in filteredTasks" :key="index" >
+          <button class="btnDrag"
+            draggable="true"
+            @dragstart="dragStart(index)"
+            @dragover.prevent
+            @drop="drop(index)"
+          >⠿</button>
           <button class="btnCheck" @click="completeTask(index)">
             <svg width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="checkbox">
               <path :style="{stroke:task.completed?'#41B783':'#EEE'}" d="M416 448H96a32.09 32.09 0 01-32-32V96a32.09 32.09 0 0132-32h320a32.09 32.09 0 0132 32v320a32.09 32.09 0 01-32 32z" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
@@ -30,6 +36,12 @@
           </button>
         </li>
       </ul>
+      <sub>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16px" height="16px">
+          <path d="M304 384v-24c0-29 31.54-56.43 52-76 28.84-27.57 44-64.61 44-108 0-80-63.73-144-144-144a143.6 143.6 0 00-144 144c0 41.84 15.81 81.39 44 108 20.35 19.21 52 46.7 52 76v24M224 480h64M208 432h96M256 384V256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
+          <path d="M294 240s-21.51 16-38 16-38-16-38-16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
+        </svg> 
+        Edite itens clicando na descrição deles.</sub>
     </section>
     <footer>
         <a href="https://www.linkedin.com/in/viniciusmachadovianna/" target="_blank" rel="noopener noreferrer">
@@ -47,12 +59,15 @@ export default{
         newTask: '',
         currentFilter: 'all',
         tasks: [
-            { text: '+ filtros "Tudo","Pendentes" e "Completas"', completed: false },
+            { text: 'bug: remover espaço em branco abaixo de alguns itens com descrição grande', completed: false },
+            { text: 'style: ajustar tamanho dos itens assim que a página carrega', completed: true },
+            { text: 'ux: aumentar espaço para conseguir mover uma tarefa', completed: false },
+            { text: '+ filtros "Tudo","Pendentes" e "Completas"', completed: true },
             { text: 'Estilizar lista', completed: true },
             { text: 'Editar texto dos itens', completed: true },
-            { text: 'Desenvolver função para reordenar/arrastar tarefas', completed: false },
+            { text: 'Desenvolver função para reordenar/arrastar tarefas', completed: true },
             { text: 'Adicionar botão de arrastar', completed: true },
-            { text: 'itens grandes expandem automaticamente na lista', completed: false },
+            { text: 'itens grandes expandem automaticamente na lista', completed: true },
         ]
     };
     },
@@ -80,7 +95,25 @@ export default{
           y=`${e.clientY-sec.top}px`
         document.documentElement.style.setProperty('--m-x',x)
         document.documentElement.style.setProperty('--m-y',y)
-      }
+      },
+      dragStart(index) {
+        this.draggedIndex = index;
+      },
+      drop(targetIndex) {
+        const draggedTask = this.tasks[this.draggedIndex];
+        this.tasks.splice(this.draggedIndex, 1);
+        this.tasks.splice(targetIndex, 0, draggedTask);
+        this.draggedIndex = null;
+      },
+      autoResizeAllTextareas() {
+        this.$nextTick(() => {
+          const textareas = this.$el.querySelectorAll('textarea');
+          textareas.forEach(textarea => {
+            textarea.style.height = 'auto';
+            textarea.style.height = `${textarea.scrollHeight}px`;
+          });
+        });
+      },
     },
     computed: {
       filteredTasks() {
@@ -94,5 +127,6 @@ export default{
         }
       }
     },
+    mounted(){this.autoResizeAllTextareas()}
 };
 </script>
