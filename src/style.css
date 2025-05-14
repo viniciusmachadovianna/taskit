@@ -24,7 +24,7 @@ body {
     
 }
 #app{
-    margin-top: 50px;
+    margin-top: 20px;
     display: flex;
     flex-flow: column;
 }
@@ -43,6 +43,7 @@ body {
     display: flex;
     flex-flow: column;
     align-items: center;
+    margin-bottom: 50px;
 }
 .input{
     width: fit-content;
