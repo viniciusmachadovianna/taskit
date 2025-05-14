@@ -14,12 +14,15 @@
         <button @click="currentFilter = 'pending'" :class="{ active: currentFilter === 'pending' }">Pendentes</button>
       </nav>
       <ul>
-        <li v-for="(task, index) in filteredTasks" :key="index" >
+        <li v-for="(task, index) in filteredTasks"    :key="index" 
+          @dragstart="dragStart(index)"
+          @dragover.prevent
+          @drop="drop(index)"
+          @dragend="dragEnd"
+          :class="{ dragging: draggedIndex === index }">
           <button class="btnDrag"
-            draggable="true"
-            @dragstart="dragStart(index)"
-            @dragover.prevent
-            @drop="drop(index)"
+            @mousedown.stop="enableDrag($event)"
+            @mouseup.stop="disableDrag($event)"
           >⠿</button>
           <button class="btnCheck" @click="completeTask(index)">
             <svg width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="checkbox">
@@ -72,16 +75,16 @@ export default{
     };
     },
     methods: {
-    addTask() {
-        const trimmed = this.newTask.trim();
-        if (trimmed !== '') {
-            this.tasks.unshift({ //.push() 2 bottom
-            text: trimmed,
-            completed: false
-            });
-            this.newTask = '';
-        }
-    },
+      addTask() {
+          const trimmed = this.newTask.trim();
+          if (trimmed !== '') {
+              this.tasks.unshift({ //.push() 2 bottom
+              text: trimmed,
+              completed: false
+              });
+              this.newTask = '';
+          }
+      },
       completeTask(index) {this.tasks[index].completed = !this.tasks[index].completed},
       removeTask(index) {this.tasks.splice(index, 1)},
       autoResize(e){
@@ -96,9 +99,10 @@ export default{
         document.documentElement.style.setProperty('--m-x',x)
         document.documentElement.style.setProperty('--m-y',y)
       },
-      dragStart(index) {
-        this.draggedIndex = index;
-      },
+      enableDrag(e){e.currentTarget.closest('li').setAttribute('draggable','true')},
+      disableDrag(e){e.currentTarget.closest('li').removeAttribute('draggable')},
+      dragStart(index){this.draggedIndex = index},
+      dragEnd(){this.draggedIndex = null},
       drop(targetIndex) {
         const draggedTask = this.tasks[this.draggedIndex];
         this.tasks.splice(this.draggedIndex, 1);
