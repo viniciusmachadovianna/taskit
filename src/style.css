@@ -72,6 +72,27 @@ body {
         }
     }
 }
+.filters {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.filters button{
+  background: transparent;
+  border: 1px solid var(--green-v);
+  color: var(--white);
+  padding: 4px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.filters button.active {
+  background-color: var(--green-v);
+  color: var(--black);
+}
 ul{
     max-height: 60dvh;
     margin-bottom: 20px;
@@ -87,14 +108,15 @@ ul{
         display: flex;
         flex-flow: row;
         align-items: flex-start;
-        /* &::before{
+        &::before{
             content: '⠿';
             position: absolute;
             right: 100%;
             height: 100%;
             color: gray;
-            cursor: grab;
-        } */
+            cursor: not-allowed;
+            /* cursor: grab; */
+        }
         &>textarea{
             all: unset;
             background-color: transparent;

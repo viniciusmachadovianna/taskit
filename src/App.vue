@@ -8,8 +8,13 @@
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" ><path d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z" fill="none"  stroke-miterlimit="10" stroke-width="32"/><path fill="none" stroke-linecap="square" stroke-linejoin="miter" stroke-width="32" d="M256 176v160M336 256H176"/></svg>
           </button>
       </div>
+      <nav class="filters">
+        <button @click="currentFilter='all'" :class="{ active: currentFilter==='all'}">Todas</button>
+        <button @click="currentFilter = 'done'" :class="{ active: currentFilter === 'done' }">Concluídas</button>
+        <button @click="currentFilter = 'pending'" :class="{ active: currentFilter === 'pending' }">Pendentes</button>
+      </nav>
       <ul>
-        <li v-for="(task, index) in tasks" :key="index" >
+        <li v-for="(task, index) in filteredTasks" :key="index" >
           <button class="btnCheck" @click="completeTask(index)">
             <svg width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="checkbox">
               <path :style="{stroke:task.completed?'#41B783':'#EEE'}" d="M416 448H96a32.09 32.09 0 01-32-32V96a32.09 32.09 0 0132-32h320a32.09 32.09 0 0132 32v320a32.09 32.09 0 01-32 32z" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
@@ -33,16 +38,17 @@
 </template>
 
 <script>
-import { onMounted } from 'vue';
 export default{
     data() {
     return {
         newTask: '',
+        currentFilter: 'all',
         tasks: [
+            { text: '+ filtros "Tudo","Pendentes" e "Completas"', completed: false },
             { text: 'Estilizar lista', completed: true },
             { text: 'Editar texto dos itens', completed: true },
             { text: 'Desenvolver função para reordenar/arrastar tarefas', completed: false },
-            { text: 'Adicionar botão de arrastar', completed: false },
+            { text: 'Adicionar botão de arrastar', completed: true },
             { text: 'itens grandes expandem automaticamente na lista', completed: false },
         ]
     };
@@ -58,8 +64,20 @@ export default{
             this.newTask = '';
         }
     },
-    completeTask(index) {this.tasks[index].completed = !this.tasks[index].completed},
-    removeTask(index) {this.tasks.splice(index, 1)}
+      completeTask(index) {this.tasks[index].completed = !this.tasks[index].completed},
+      removeTask(index) {this.tasks.splice(index, 1)}
+    },
+    computed: {
+      filteredTasks() {
+        switch (this.currentFilter) {
+          case 'done':
+            return this.tasks.filter(task => task.completed);
+          case 'pending':
+            return this.tasks.filter(task => !task.completed);
+          default:
+            return this.tasks;
+        }
+      }
     },
     mounted(){
       const li = document.querySelector('section')
