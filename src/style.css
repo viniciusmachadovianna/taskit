@@ -79,6 +79,7 @@ body {
   margin-top: 20px;
   display: flex;
   gap: 10px;
+  margin: 0 10px;
   justify-content: center;
 }
 
@@ -90,11 +91,23 @@ body {
   cursor: pointer;
   border-radius: 5px;
   font-size: 1em;
+  display: flex;
+  align-items: center;
+  height: 30px;
 }
 
 .filters button.active {
   background-color: var(--green-v);
   color: var(--black);
+}
+.filters button.active > sup {display:inline-block;}
+.filters sup{
+    display: none;
+    padding: 2px 5px;
+    border-radius: 50%;
+    color: black;
+    margin-left: 5px;
+    background-color: var(--white);
 }
 ul{
     margin-bottom: 10px;

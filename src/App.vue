@@ -9,9 +9,9 @@
           </button>
       </div>
       <nav class="filters">
-        <button @click="currentFilter='all'" :class="{ active: currentFilter==='all'}">Todas</button>
-        <button @click="currentFilter = 'done'" :class="{ active: currentFilter === 'done' }">Concluídas</button>
-        <button @click="currentFilter = 'pending'" :class="{ active: currentFilter === 'pending' }">Pendentes</button>
+        <button @click="currentFilter='all'" :class="{ active: currentFilter==='all'}">Todas <sup>{{ tasks.length }}</sup></button>
+        <button @click="currentFilter = 'done'" :class="{ active: currentFilter === 'done' }">Concluídas <sup>{{ tasks.filter(t => t.completed).length }}</sup></button>
+        <button @click="currentFilter = 'pending'" :class="{ active: currentFilter === 'pending' }">Pendentes <sup>{{ tasks.filter(t => !t.completed).length }}</sup></button>
       </nav>
       <ul>
         <li v-for="(task, index) in filteredTasks"    :key="index" 
@@ -62,9 +62,9 @@ export default{
         newTask: '',
         currentFilter: 'all',
         tasks: [
-            { text: 'bug: remover espaço em branco abaixo de alguns itens com descrição grande', completed: false },
+            { text: 'bug: remover espaço em branco abaixo de alguns itens com descrição grande', completed: true },
             { text: 'style: ajustar tamanho dos itens assim que a página carrega', completed: true },
-            { text: 'ux: aumentar espaço para conseguir mover uma tarefa', completed: false },
+            { text: 'ux: aumentar espaço para conseguir mover uma tarefa', completed: true },
             { text: '+ filtros "Tudo","Pendentes" e "Completas"', completed: true },
             { text: 'Estilizar lista', completed: true },
             { text: 'Editar texto dos itens', completed: true },
@@ -78,7 +78,7 @@ export default{
       addTask() {
           const trimmed = this.newTask.trim();
           if (trimmed !== '') {
-              this.tasks.unshift({ //.push() 2 bottom
+              this.tasks.unshift({
               text: trimmed,
               completed: false
               });
